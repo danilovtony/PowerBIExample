@@ -8,7 +8,7 @@ const checkStatus = (response) => {
     }
     if (response.status === 403)
         localStorage.removeItem('token');
-        return window.location.replace('https://c84e04d0ebfc.ngrok.io/');
+        return window.location.replace(process.env.REACT_APP_NGROK);
 };
 
 export const getWorkspaces = () => {
