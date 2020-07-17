@@ -1,9 +1,7 @@
 import * as powerbi from "powerbi-client";
 import * as pbimodels from "powerbi-models";
 
-import {getData} from "./api/Auth";
-
-export default class PowerBiEmbeddingService {
+export class PowerBiEmbeddingService {
 
     static reset(embedContainer) {
         window.powerbi.reset(embedContainer);
@@ -14,7 +12,7 @@ export default class PowerBiEmbeddingService {
         // data required for embedding Power BI dashboard
         const embedDashboardId = dashboard.id;
         const embedUrl = dashboard.embedUrl;
-        const accessToken = getData().accessToken;
+        const accessToken = getToken();
         const models = pbimodels;
 
         const config = {
@@ -28,14 +26,13 @@ export default class PowerBiEmbeddingService {
 
         window.powerbi.reset(embedContainer);
         window.powerbi.embed(embedContainer, config);
-
     }
 
     static embedReport(report, embedContainer) {
 
         const embedReportId = report.id;
         const embedUrl = report.embedUrl;
-        const accessToken = getData().accessToken;
+        const accessToken = getToken();
         const models = pbimodels;
 
         const config = {
@@ -57,3 +54,6 @@ export default class PowerBiEmbeddingService {
 
     }
 }
+
+export const getToken = () => localStorage.getItem('token');
+export const setToken = (token) => localStorage.setItem('token', token);

@@ -1,6 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import React, {useEffect, useState} from 'react';
 import {getDashboardsInWorkspace} from '../api/PowerBI';
+import {getToken} from "../utils";
 
 const DashboardsList = () => {
     const {workspaceId} = useParams();
@@ -11,7 +12,7 @@ const DashboardsList = () => {
             .then((data) => {
                 setDashboards(data)
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {console.log(e)});
     }, []);
 
     return (
@@ -21,7 +22,10 @@ const DashboardsList = () => {
                 {dashboards.map((dashboard, index) =>
                     <div className="col-3 ">
                         <div key={dashboard.id} className="card card-item mb-3">
-                            <Link to={`/workspaces/${workspaceId}/dashboards/${dashboard.id}`}
+                            <Link to={{
+                                pathname: `/workspaces/${workspaceId}/dashboards/${dashboard.id}`,
+                                search: `?token=${getToken()}`
+                            }}
                                   className="card-body card-content"
                             >
                                 <div className="trim">{dashboard.displayName}</div>

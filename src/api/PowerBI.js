@@ -2,6 +2,14 @@ import {getData} from "./Auth";
 
 const apiRoot = "https://api.powerbi.com/v1.0/myorg/";
 
+const checkStatus = (response) => {
+    if (response.status >= 200 && response.status < 300) {
+        return response;
+    }
+    if (response.status === 403)
+        localStorage.removeItem('token');
+        return window.location.replace('https://c84e04d0ebfc.ngrok.io/');
+};
 
 export const getWorkspaces = () => {
     const restUrl = apiRoot + "groups/";
@@ -10,7 +18,9 @@ export const getWorkspaces = () => {
             "Accept": "application/json;odata.metadata=minimal;",
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
-    }).then(response => response.json())
+    })
+        .then(response => checkStatus(response))
+        .then(response => response.json())
         .then(response => response.value || []);
 }
 
@@ -21,7 +31,8 @@ export const getReportsInWorkspace = (workspaceId) => {
             "Accept": "application/json;odata.metadata=minimal;",
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
-    }).then(response => response.json())
+    }).then(response => checkStatus(response))
+        .then(response => response.json())
         .then(response => response.value || []);
 }
 
@@ -34,7 +45,8 @@ export const getDashboardsInWorkspace = (workspaceId) => {
             "Accept": "application/json;odata.metadata=minimal;",
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
-    }).then(response => response.json())
+    }).then(response => checkStatus(response))
+        .then(response => response.json())
         .then(response => response.value || []);
 }
 
@@ -46,7 +58,8 @@ export const getDashboardInWorkspace = (workspaceId, dashboardId) => {
             "Accept": "application/json;odata.metadata=minimal;",
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
-    }).then(response => response.json());
+    }).then(response => checkStatus(response))
+        .then(response => response.json());
 }
 
 export const getReportInWorkspace = (workspaceId, reportId) => {
@@ -57,27 +70,6 @@ export const getReportInWorkspace = (workspaceId, reportId) => {
             "Accept": "application/json;odata.metadata=minimal;",
             "Authorization": "Bearer " + localStorage.getItem('token')
         }
-    }).then(response => response.json());
+    }).then(response => checkStatus(response))
+        .then(response => response.json());
 }
-
-// export const getDashboardTiles = ( ,dashboardId) => {
-//     restUrl = PowerBiService.appWorkspaceApiRoot + "Dashboards/" + dashboardId + "/tiles/";
-//     return fetch(restUrl, {
-//         headers: {
-//             "Accept": "application/json;odata.metadata=minimal;",
-//             "Authorization": "Bearer " + getData().accessToken
-//         }
-//     }).then(response => response.json())
-//         .then(response => { return response.value; });
-// }
-
-// export const getDatasets = () => {
-//     var restUrl = PowerBiService.appWorkspaceApiRoot + "Datasets/";
-//     return fetch(restUrl, {
-//         headers: {
-//             "Accept": "application/json;odata.metadata=minimal;",
-//             "Authorization": "Bearer " + getData().accessToken
-//         }
-//     }).then(response => response.json())
-//         .then(response => { return response.value; });
-// }

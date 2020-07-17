@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {getReportInWorkspace} from '../api/PowerBI';
-import PowerBiEmbeddingService from '../utils';
+import {PowerBiEmbeddingService} from '../utils';
 
 const Report = () => {
     let {reportId, workspaceId} = useParams();
@@ -14,7 +14,7 @@ const Report = () => {
                 .then((data) => {
                     updateEmbeddedReport(reportId, data);
                 })
-                .catch((e) => console.error(e));
+                .catch((e) => {console.error(e)});
 
         }
     }, [reportId]);

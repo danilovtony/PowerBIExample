@@ -1,4 +1,5 @@
 import AuthenticationContext from 'adal-angular';
+import {getToken} from '../utils';
 
 const config = {
     clientId: process.env.REACT_APP_CLIENT_ID,

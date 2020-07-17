@@ -6,7 +6,6 @@ import {login, getData} from '../api/Auth.js';
 const Login = () => {
     const {userIsAuthenticated, loginInProgress} = getData();
 
-
     return (
         userIsAuthenticated
             ? <Redirect to={'/workspaces'}/>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getReportsInWorkspace} from '../api/PowerBI';
 import {Link, useParams} from "react-router-dom";
+import {getToken} from "../utils";
 
 const   ReportsList = () => {
     const {workspaceId} = useParams();
@@ -11,7 +12,7 @@ const   ReportsList = () => {
             .then((data) => {
                 setReports(data)
             })
-            .catch((e) => console.log(e));
+            .catch((e) => { console.log(e)});
     }, []);
 
     return (
@@ -21,7 +22,9 @@ const   ReportsList = () => {
                 {reports.map((report, index) =>
                     <div className="col-3 ">
                         <div key={report.id} className="card card-item mb-3">
-                            <Link to={`/workspaces/${workspaceId}/reports/${report.id}`}
+                            <Link to={{pathname: `/workspaces/${workspaceId}/reports/${report.id}`,
+                                search: `?token=${getToken()}`
+                            }}
                                   className="card-body card-content"
                             >
                                 <div className="trim">{report.name}</div>
