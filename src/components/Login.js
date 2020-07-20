@@ -10,14 +10,14 @@ const Login = () => {
         userIsAuthenticated
             ? <Redirect to={'/workspaces'}/>
             : loginInProgress
-                ? <div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-                : <div>
-                    <button className='btn btn-primary' onClick={() => login()}>
-                        Login
-                    </button>
-                </div>
+            ? <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+            : <div>
+                <button className='btn btn-primary' onClick={() => login()}>
+                    Login
+                </button>
+            </div>
     );
 }
 
