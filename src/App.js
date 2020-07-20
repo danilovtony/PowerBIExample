@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+    Redirect,
     Route,
     Switch,
     useHistory
@@ -51,6 +52,7 @@ const App = () => {
                     <PrivateRoute exact path='/workspaces/:workspaceId/reports' component={ReportsList} />
 
                     <PrivateRoute exact path='/workspaces/:workspaceId/reports/:reportId' component={Report} />
+                    <Redirect to='/workspaces'/>
                 </Switch>
             </div>
         </div>
