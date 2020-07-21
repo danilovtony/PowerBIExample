@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
 import {getWorkspaces} from "../api/PowerBI";
 import {getToken} from '../utils';
 
 const WorkspacesList = () => {
-    const history = useHistory();
     const [workspaces, setWorkspaces] = useState([]);
     useEffect(() => {
         getWorkspaces()

@@ -1,5 +1,4 @@
 import AuthenticationContext from 'adal-angular';
-import {getToken} from '../utils';
 
 const config = {
     clientId: process.env.REACT_APP_CLIENT_ID,
@@ -49,7 +48,6 @@ export const init = () => {
                     return;
                 }
                 localStorage.setItem('token', token);
-                console.log("Access token:", token);
                 data.accessToken = token;
                 data.userIsAuthenticated = true;
                 data.userName = user.profile["name"];
