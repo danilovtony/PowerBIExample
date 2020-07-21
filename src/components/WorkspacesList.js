@@ -22,8 +22,8 @@ const WorkspacesList = () => {
             <h1>Select Workspace</h1>
             <div className="row">
                 {workspaces.map((workspace, index) =>
-                    <div className="col-3">
-                        <div key={workspace.id} className="card card-item mb-3">
+                    <div key={workspace.id} className="col-3">
+                        <div className="card card-item mb-3">
                             <Link to={{
                                 pathname: `/workspaces/${workspace.id}/`,
                                 search: `?token=${getToken()}`

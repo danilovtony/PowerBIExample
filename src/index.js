@@ -10,11 +10,11 @@ const BrowserHistory = createBrowserHistory();
 
 
 ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <Router history={BrowserHistory}>
             <App />
-        </Router>
-    </React.StrictMode>,
+        </Router>,
+    // </React.StrictMode>
     document.getElementById('root')
 );
 

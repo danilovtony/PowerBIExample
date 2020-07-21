@@ -21,10 +21,17 @@ import {init, setUiUpdateCallback} from "./api/Auth";
 const App = () => {
     const history = useHistory();
 
-    useEffect(()=> {
-        if (!localStorage.getItem('token')) {
+    const [loading, setLoading] = useState(false);
 
+    useEffect(()=> {
+        const token = localStorage.getItem('token');
+        const locationPath = history.location.pathname;
+
+        if (!token) {
+            setLoading(true)
             setUiUpdateCallback ((data) => {
+                setLoading(false);
+
                 if (data.userIsAuthenticated) {
                     history.push('/workspaces');
                 } else {
@@ -32,27 +39,32 @@ const App = () => {
                 }
             });
             init();
-        } else {history.push('/workspaces')}
+        } else if(token && locationPath === '/') {
+             history.push('/workspaces')
+        }
     }, [history]);
-
     return (
         <div className='AppWrapper'>
             <div className='App'>
-                <Switch>
-                    <Route path='/login' component={Login} />
+                {loading ?
+                    <p className='text-center'>Loading...</p>
+                    :
+                    <Switch>
+                        <Route path='/login' component={Login} />
 
-                    <PrivateRoute exact path='/workspaces' component={WorkspacesList}/>
+                        <PrivateRoute exact path='/workspaces' component={WorkspacesList}/>
 
-                    <PrivateRoute exact path='/workspaces/:workspaceId' component={Workspace} />
+                        <PrivateRoute exact path='/workspaces/:workspaceId' component={Workspace} />
 
-                    <PrivateRoute exact path='/workspaces/:workspaceId/dashboards/:dashboardId' component={Dashboard} />
+                        <PrivateRoute exact path='/workspaces/:workspaceId/dashboards/:dashboardId' component={Dashboard} />
 
-                    <PrivateRoute exact path='/workspaces/:workspaceId/dashboards' component={DashboardsList} />
+                        <PrivateRoute exact path='/workspaces/:workspaceId/dashboards' component={DashboardsList} />
 
-                    <PrivateRoute exact path='/workspaces/:workspaceId/reports' component={ReportsList} />
+                        <PrivateRoute exact path='/workspaces/:workspaceId/reports' component={ReportsList} />
 
-                    <PrivateRoute exact path='/workspaces/:workspaceId/reports/:reportId' component={Report} />
-                </Switch>
+                        <PrivateRoute exact path='/workspaces/:workspaceId/reports/:reportId' component={Report} />
+                    </Switch>
+                }
             </div>
         </div>
     );
